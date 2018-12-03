@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-logo {
@@ -29,4 +29,22 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.itineraryCard:hover {
+  transform: scale(1.05);
+}
+
+.About{
+  text-align: center;
+}
+
+.ItinDetails{
+  margin-top: 20px;
+  text-align: center;
+}
+
+.Profile{
+  margin-top: 20px;
 }
