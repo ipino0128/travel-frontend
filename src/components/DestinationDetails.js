@@ -1,5 +1,6 @@
 import React from 'react'
 import ItineraryContainer from '../containers/ItineraryContainer'
+import FlightSearch from './FlightSearch'
 
 const DestinationDetails = (props) => {
 
@@ -15,9 +16,13 @@ const DestinationDetails = (props) => {
         return(
           <div>
           <h1>{current_destination.name}</h1>
+
           <br/>
           <ItineraryContainer destination={current_destination} displayItineraryDetails={props.displayItineraryDetails}/>
+          <h4> Search flights: </h4>
+          <FlightSearch/>
           </div>
+
         )
       }
 

@@ -45,6 +45,7 @@
   text-align: center;
 }
 
-.Profile{
-  margin-top: 20px;
+.Profile, .Login, .Create{
+  margin-top: 30px;
+  margin-left: 20px;
 }

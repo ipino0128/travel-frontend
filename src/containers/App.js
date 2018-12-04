@@ -7,9 +7,11 @@ import ItineraryDetails from '../components/ItineraryDetails'
 import { Search } from 'semantic-ui-react'
 import _ from 'lodash'
 import Profile from './Profile'
+import Login from '../components/Login'
+import CreateUser from '../components/CreateUser'
 
 
-import {Route} from 'react-router-dom'
+import {Route, Redirect} from 'react-router-dom'
 
 class App extends Component {
   constructor(){
@@ -19,16 +21,31 @@ class App extends Component {
       current_destination: null,
       current_itinerary: null,
       searchTerm: "",
-      user: null
+      currentUser: null
     }
   }
 
   componentDidMount(){
+    let token = localStorage.getItem('token')
+   if(token){
+     fetch(`http://localhost:3000/profile`, {
+       method: "GET",
+       headers: {
+         "Authentication" : `Bearer ${token}`
+       }
+     }).then(res => res.json())
+     .then(data => {
+       this.setState({
+         currentUser: data.user
+       })
+     })
+   }
     fetch('http://localhost:3000/destinations')
     .then(res => res.json())
     .then(data => this.setState({
       destinations: data
     }))
+
   }
 
   displayDetails = (destination) => {
@@ -49,8 +66,14 @@ class App extends Component {
   })
 }
 
+updateCurrentUser = (user) => {
+   this.setState({currentUser: user})
+ }
 
-
+logout = () => {
+    localStorage.removeItem('token');
+    this.setState({currentUser: null})
+  }
 
   render() {
     const orderedDestinations = this.state.destinations.sort(function(a,b){
@@ -62,7 +85,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <NavBar/>
+        <NavBar logged_in={!!this.state.currentUser} logout={this.logout}/>
         <Route exact path='/' render={()=> <Search onSearchChange={_.debounce(this.handleSearchChange, 500)} showNoResults={false} />
           }/>
         <div className="ui grid">
@@ -74,15 +97,28 @@ class App extends Component {
           <Route exact path='/' render={()=>
             <DestinationDetails
               current_destination={this.state.current_destination}
-              displayItineraryDetails={this.displayItineraryDetails}/>
+              displayItineraryDetails={this.displayItineraryDetails}
+              />
           }/>
         </div>
           <Route exact path='/itineraries/:id' render={()=> {
           return <ItineraryDetails itinerary={this.state.current_itinerary}/>
         }
         }/>
-        <Route exact path='/profile' render={Profile}/>
+        <Route exact path="/profile" render={() =>
+          <Profile
+          currentUser={this.state.currentUser}
+          displayItineraryDetails={this.displayItineraryDetails}
+          destinations={orderedDestinations}
 
+          />}
+          />
+          <Route exact path="/login" render={() => this.state.currentUser ?
+            <Redirect to='/profile'/> :
+            <Login updateCurrentUser={this.updateCurrentUser}
+            /> }
+          />
+            <Route exact path="/create" render={() => <CreateUser />} />
       </div>
     );
   }
