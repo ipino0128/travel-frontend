@@ -2,8 +2,6 @@ import React from 'react'
 import {Redirect} from 'react-router-dom'
 import { Card, Image} from 'semantic-ui-react'
 import ProfileItineraryContainer from './ProfileItineraryContainer'
-import ProfileModal from '../components/ProfileModal'
-
 
 const Profile = (props) => {
   const options = props.destinations.map(destination => {
@@ -24,11 +22,13 @@ const Profile = (props) => {
      </Card.Content>
    </Card>
 
-      <h4> My Itineraries: </h4>
-     <ProfileModal options={options} currentUser={currentUser}/>
-      <br/>
-      <br/>
-   <ProfileItineraryContainer currentUser={currentUser} displayItineraryDetails={props.displayItineraryDetails}/>
+
+   <ProfileItineraryContainer
+   currentUser={currentUser}
+   displayItineraryDetails={props.displayItineraryDetails}
+   options={options}
+   addAllItin={props.addAllItin}
+   removeFromAll={props.removeFromAll}/>
 
    </div>
  ) : <Redirect to='/login' />

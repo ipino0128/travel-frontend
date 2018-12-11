@@ -10,7 +10,7 @@ const NavBar = (props) => {
     <Menu pointing secondary>
       {logged_in ? (
         <Fragment>
-         <div className='header item'>Travel</div>
+         <div className='header item'>MyTravels</div>
         <Menu.Item
           as={NavLink}
           to="/"
@@ -23,18 +23,13 @@ const NavBar = (props) => {
             name="My Profile"
             active={pathname === "/profile"}
           />
-          <Menu.Item
-            as={NavLink}
-            to="/favorites"
-            name="My Favorites"
-            active={pathname === "/favorites"}
-          />
           <Menu.Menu position="right">
             <Menu.Item to="/logout" name="Logout" onClick={logout} />
           </Menu.Menu>
         </Fragment>
       ) : (
         <Fragment>
+        <div className='header item'>MyTravels</div>
         <Menu.Item
           as={NavLink}
           to="/"

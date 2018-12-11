@@ -2,7 +2,7 @@ import React from 'react'
 
 const DestinationContainer = (props) => {
   return(
-    <div className="four wide column">
+    <div className="four wide column" id="destination-container">
     <h3>Destinations: </h3>
       <div role='list' className='ui divided animated middle aligned list'>
       {props.destinations.map(destination => {

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, Header, Modal, Dropdown} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 
 class ProfileModal extends React.Component{
-  debugger
   constructor(){
     super()
     this.state={
@@ -11,30 +11,39 @@ class ProfileModal extends React.Component{
       description: "",
       img_url: "",
       user_id: "",
-      destination_id: ""
+      destination_id: "",
+      created_itinerary: null,
+      modalOpen: false
     }
   }
 
-  handleChange = (e) => {
+  handleChange = (event) => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [event.target.name]: event.target.value,
       user_id: this.props.currentUser.id,
     })
   }
 
   handleSelectorChange = (event, data) => {
-    console.log(data)
+    this.setState({
+      destination_id: data.value
+    })
   }
+
+
+  handleOpen = () => this.setState({ modalOpen: true })
+
+  handleClose = () => this.setState({ modalOpen: false })
+
 
   handleSubmit = (e) => {
     e.preventDefault()
-    let data = { user: {
+    let data = {
       title: this.state.title,
       description: this.state.description,
       img_url: this.state.img_url,
       user_id: this.state.user_id,
       destination_id: this.state.destination_id
-      }
     }
     fetch('http://localhost:3000/itineraries', {
     method: "POST",
@@ -44,24 +53,27 @@ class ProfileModal extends React.Component{
     },
     body: JSON.stringify(data)
   }).then(res=> res.json())
-  .then(itinerary => console.log(itinerary))
+  .then(itinerary => {
+    this.props.addItinerary(itinerary)
+    this.props.addAllItin(itinerary)
+    this.handleClose()
+  })
 }
 
   render(){
     return(
       <div>
-        <Modal trigger={<Button icon='add'></Button>} closeIcon>
+        <Modal trigger={<Button
+          onClick={this.handleOpen}
+          icon='add'></Button>}
+          open={this.state.modalOpen}
+          onClose={this.handleClose}
+          closeIcon>
+
             <Header icon='paper plane outline' content='Create an Itinerary' />
             <Modal.Content>
             <form className='ui form' onSubmit={this.handleSubmit}>
             <div className="field">
-              <label>Destination</label>
-              <input
-              name="destination"
-              type="text"
-              // onChange={this.handleChange}
-              // value={this.state.img_url}
-              placeholder='Destination' />
               <Dropdown
                      label="Destination"
                      placeholder='Destination'
@@ -97,9 +109,7 @@ class ProfileModal extends React.Component{
                 value={this.state.img_url}
                 placeholder='Image URL' />
               </div>
-
-              <Button type="submit"> Create </Button>
-
+              <Button type="submit" > Create </Button>
             </form>
             </Modal.Content>
           </Modal>

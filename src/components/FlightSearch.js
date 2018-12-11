@@ -1,12 +1,16 @@
 import React from 'react'
 
+
 const FlightSearch = () => {
 
 
-return(
-  <div>
+
+  return(
+    <div>
+    hello
 </div>
-)
+  )
+
 }
 
 export default FlightSearch

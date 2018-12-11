@@ -39,7 +39,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <Segment>
+      <Segment className="loginfolder">
         <Form
           onSubmit={this.handleLoginSubmit}
           size="mini"

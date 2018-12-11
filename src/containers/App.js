@@ -21,7 +21,8 @@ class App extends Component {
       current_destination: null,
       current_itinerary: null,
       searchTerm: "",
-      currentUser: null
+      currentUser: null,
+      itineraries: []
     }
   }
 
@@ -45,7 +46,11 @@ class App extends Component {
     .then(data => this.setState({
       destinations: data
     }))
-
+    fetch('http://localhost:3000/itineraries')
+    .then(res => res.json())
+    .then(data => this.setState({
+      itineraries: data
+    }))
   }
 
   displayDetails = (destination) => {
@@ -75,6 +80,20 @@ logout = () => {
     this.setState({currentUser: null})
   }
 
+addAllItin = (itinerary) => {
+  this.setState({
+    itineraries: [...this.state.itineraries, itinerary]
+  })
+}
+
+
+removeFromAll = (itinerary) => {
+  console.log(itinerary)
+  this.setState({
+    itineraries: this.state.itineraries.filter(prevItin=> prevItin.id !== itinerary.id)
+  })
+}
+
   render() {
     const orderedDestinations = this.state.destinations.sort(function(a,b){
     return a.name.localeCompare(b.name);})
@@ -86,7 +105,7 @@ logout = () => {
     return (
       <div className="App">
         <NavBar logged_in={!!this.state.currentUser} logout={this.logout}/>
-        <Route exact path='/' render={()=> <Search onSearchChange={_.debounce(this.handleSearchChange, 500)} showNoResults={false} />
+        <Route exact path='/' render={()=> <Search className="search-feature" onSearchChange={_.debounce(this.handleSearchChange, 500)} showNoResults={false} />
           }/>
         <div className="ui grid">
           <Route exact path='/' render={()=>     <DestinationContainer
@@ -98,11 +117,14 @@ logout = () => {
             <DestinationDetails
               current_destination={this.state.current_destination}
               displayItineraryDetails={this.displayItineraryDetails}
+              removeFromAll={this.removeFromAll}
+              itineraries={this.state.itineraries}
+              currentUser={this.state.currentUser}
               />
           }/>
         </div>
           <Route exact path='/itineraries/:id' render={()=> {
-          return <ItineraryDetails itinerary={this.state.current_itinerary}/>
+          return <ItineraryDetails itinerary={this.state.current_itinerary} currentUser={this.state.currentUser} removeItinerary={this.removeItinerary}/>
         }
         }/>
         <Route exact path="/profile" render={() =>
@@ -110,7 +132,8 @@ logout = () => {
           currentUser={this.state.currentUser}
           displayItineraryDetails={this.displayItineraryDetails}
           destinations={orderedDestinations}
-
+          addAllItin={this.addAllItin}
+          removeFromAll={this.removeFromAll}
           />}
           />
           <Route exact path="/login" render={() => this.state.currentUser ?

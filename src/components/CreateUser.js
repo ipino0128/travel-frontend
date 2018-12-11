@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from "semantic-ui-react";
-import {Link} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 
 
 class CreateUser extends React.Component {
@@ -9,7 +9,9 @@ class CreateUser extends React.Component {
     this.state={
       username: "",
       password: "",
-      password_confirmation: ""
+      password_confirmation: "",
+      bio: "",
+      avatar: ""
     }
   }
 
@@ -24,7 +26,9 @@ class CreateUser extends React.Component {
     let data = { user: {
       username: this.state.username,
       password: this.state.password,
-      password_confirmation: this.state.password_confirmation
+      password_confirmation: this.state.password_confirmation,
+      bio: this.state.bio,
+      avatar: this.state.avatar
       }
     }
     fetch('http://localhost:3000/users', {
@@ -71,9 +75,26 @@ class CreateUser extends React.Component {
           value={this.state.password_confirmation}
           placeholder='password confirmation' />
         </div>
-          <Link to={`/profile`}>
+        <div className='field'>
+          <label>bio</label>
+          <input
+          name="bio"
+          type="text"
+          onChange={this.handleChange}
+          value={this.state.bio}
+          placeholder='bio' />
+          </div>
+          <div className='field'>
+            <label>profile picture</label>
+            <input
+            name="avatar"
+            type="text"
+            onChange={this.handleChange}
+            value={this.state.avatar}
+            placeholder='profile picture' />
+            </div>
+
         <Button type="submit"> Create </Button>
-        </Link>
       </form>
       </div>
     )

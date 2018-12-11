@@ -49,3 +49,27 @@
   margin-top: 30px;
   margin-left: 20px;
 }
+
+.widget{
+  text-align: center
+}
+
+#destination-container, .search-feature{
+  margin-left: 10px;
+}
+
+.description-of-card{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ItinDetails img{
+  height: 300px;
+  width: 400px;
+}
+
+.ItinDetails p{
+  margin-left: 300px;
+  margin-right: 300px;
+}
