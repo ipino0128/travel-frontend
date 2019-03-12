@@ -7,8 +7,9 @@ const DestinationDetails = (props) => {
       if (current_destination === null){
         return (
           <div className="About">
-            <h1> Welcome!!</h1>
+            <h1> Welcome to MyTravels!</h1>
             <h3> To explore travel itineraries, begin by choosing your destination on the left hand side.</h3>
+            <img src="https://media.giphy.com/media/l378asbpIR5DTsdqg/giphy.gif"/>
           </div>
         )
       } else {
@@ -23,7 +24,7 @@ const DestinationDetails = (props) => {
           itineraries={props.itineraries}
           currentUser={props.currentUser}
           removeFromAll={props.removeFromAll}/>
-        
+
 
           </div>
 

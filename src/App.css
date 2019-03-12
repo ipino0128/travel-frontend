@@ -1,3 +1,7 @@
+body{
+  background-color: rgb(179, 183, 181);
+
+}
 .App {
   text-align: left;
 }
@@ -72,4 +76,35 @@
 .ItinDetails p{
   margin-left: 300px;
   margin-right: 300px;
+}
+
+.loginfolder{
+  width: 500px;
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  z-index: 10;
+}
+
+.LogPic{
+  position: absolute;
+  width: 100%;
+  top: 6%;
+  background-image: url("https://i.etsystatic.com/7700956/r/il/3daeba/1703836619/il_794xN.1703836619_kadu.jpg");
+  height: 700px;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+
+.About img{
+  width: 700px;
+}
+
+.About h1{
+  font-family: 'Kalam', cursive;
+  font-size: 50px;
+}
+
+.item{
+    cursor: pointer;
 }

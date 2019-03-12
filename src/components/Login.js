@@ -39,6 +39,8 @@ class Login extends React.Component {
 
   render() {
     return (
+    <div className="LogPic">
+      
       <Segment className="loginfolder">
         <Form
           onSubmit={this.handleLoginSubmit}
@@ -74,6 +76,7 @@ class Login extends React.Component {
         <Button> Sign up</Button>
         </Link>
       </Segment>
+      </div>
     );
   }
 }
